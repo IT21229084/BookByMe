@@ -5,23 +5,23 @@ const RoomSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
-        unique:true
     },
-    email: {
-        type: String,
+    price: {
+        type: Number,
         required: true,
-        unique:true
-    },
-    password: {
-        type: String,
+
+    }, maxPeople: {
+        type: Number,
         required: true
     },
- 
-    isAdmin: {
-        type: Boolean,
+
+    desc: {
+        type: String,
         default: false
     },
+    roomNumber: [{number:Number,unavailableDates:{type:[Date]}}]
 
-},{timestamps:true})
+
+}, { timestamps: true })
 
 export default mongoose.model("Room", RoomSchema)
