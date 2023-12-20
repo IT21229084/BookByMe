@@ -3,7 +3,7 @@ import "./featured.css";
 
 const Featured = () => {
 
-  const { data, loading, error, reFetch } = useFetch("hotels/countByCity?cities=Colombo")
+  const { data, loading, error, reFetch } = useFetch("hotels/countByCity?cities=Colombo,kandy,Galle")
   console.log(data)
   return (
     <div className="featured">
@@ -26,8 +26,8 @@ const Featured = () => {
             className="featuredImg"
           />
           <div className="featuredTitles">
-            <h1>colombo</h1>
-            <h2>{data[0]} properties</h2>
+            <h1>Kandy</h1>
+            <h2>{data[1]} properties</h2>
           </div>
         </div>
         <div className="featuredItem">
@@ -37,8 +37,8 @@ const Featured = () => {
             className="featuredImg"
           />
           <div className="featuredTitles">
-            <h1>colombo</h1>
-            <h2>{data[0]} properties</h2>
+            <h1>Galle</h1>
+            <h2>{data[2]} properties</h2>
           </div>
         </div></>}
     </div>
