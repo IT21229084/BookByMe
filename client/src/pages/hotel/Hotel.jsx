@@ -11,9 +11,17 @@ import {
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 import { useContext, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useFetch from "../../hooks/useFetch.js"
 import { SearchContext } from "../../context/SearchContext.js";
+import { AuthContext } from "../../context/AuthContext"
+import Reserve from "../../components/Reserve/Reserve.jsx";
+
+
+
+
+
+
 const Hotel = () => {
 
   const location = useLocation()
@@ -21,8 +29,11 @@ const Hotel = () => {
   console.log(location)
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
   const { data, loading, error } = useFetch(`/hotels/find/${id}`)
-  const {dates,options} = useContext(SearchContext);
+  const { dates, options } = useContext(SearchContext);
+  const { user } = useContext(AuthContext)
+  const navigate = useNavigate()
   // const photos = [
   //   {
   //     src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707778.jpg?k=56ba0babbcbbfeb3d3e911728831dcbc390ed2cb16c51d88159f82bf751d04c6&o=&hp=1",
@@ -45,13 +56,13 @@ const Hotel = () => {
   // ];
 
   const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24
-  function dayDiffrence(date1,date2){
+  function dayDiffrence(date1, date2) {
     const timeDiff = Math.abs(date2.getTime() - date1.getTime())
     const diffDays = Math.ceil(timeDiff / MILLISECONDS_PER_DAY);
 
     return diffDays;
   }
-const days = dayDiffrence(dates[0].endDate,dates[0].startDate)
+  const days = dayDiffrence(dates[0].endDate, dates[0].startDate)
 
 
   const handleOpen = (i) => {
@@ -70,6 +81,10 @@ const days = dayDiffrence(dates[0].endDate,dates[0].startDate)
 
     setSlideNumber(newSlideNumber)
   };
+
+  const handlerClick = () => {
+    setOpenModal(true)
+  }
 
   return (
     <div>
@@ -140,13 +155,15 @@ const days = dayDiffrence(dates[0].endDate,dates[0].startDate)
                 <h2>
                   <b>{days * data.cheapestPrice * options.room}</b> ({days} nights)
                 </h2>
-                <button>Reserve or Book Now!</button>
+                <button onClick={handlerClick}>Reserve or Book Now!</button>
               </div>
             </div>
           </div>
           <MailList />
           <Footer />
         </div>}
+        {/* {openModal && <Reserve setOpen={setOpenModal} hoteId={id}/> } */}
+        {openModal && <Reserve setOpen={setOpenModal} hotelId={id}/> }
     </div>
   );
 };
