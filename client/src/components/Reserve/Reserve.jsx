@@ -1,24 +1,40 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import "./reserve.css"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons'
 import useFetch from '../../hooks/useFetch'
+import { SearchContext } from '../../context/SearchContext'
 
 const Reserve = ({ setOpen, hotelId }) => {
     const [selectRooms, setselectRooms] = useState([])
     const { data, loading, error } = useFetch(`/hotels/room/${hotelId}`)
+    const {dates} = useContext(SearchContext)
 
     const handleSelect = (e) => {
         const checked = e.target.checked
         const value = e.target.value
         setselectRooms(checked ? [...selectRooms, value] : selectRooms.filter((item) => item !== value))
     }
+    const getDatesRange = (startDate,endDate) =>{
+        const start = new Date(startDate)
+        const end = new Date(endDate)
+        const date = new Date(start.getTime())
+        let dates = []
 
-    const handleClick = () =>{
-        
+        while(date <=end){
+            dates.push(new Date(date).getTime())
+            date.setDate(date.getDate()+1)
+        }
+
+        return dates
     }
 
-    console.log(selectRooms)
+
+    const handleClick = () =>{
+
+    }
+
+    console.log(getDatesRange(dates[0].startDate,dates[0].endDate))
     return (
         <div className="reserve">
             <div className="rContainer">
