@@ -7,7 +7,7 @@ import axios from "axios"
 import { useNavigate } from "react-router-dom";
 const Login = () => {
     const [credentials, setCredentials] = useState({
-        username: undefined,
+        userName: undefined,
         password: undefined
     })
 
@@ -26,7 +26,7 @@ const Login = () => {
             const res = await axios.post("/auth/login",credentials)
             
             if (res.data.isAdmin){
-                dispatch({ type: "LOGIN_SUCCESS", payload: res.data }) 
+                dispatch({ type: "LOGIN_SUCCESS", payload: res.data.details }) 
                  navigate("/")
             }else{
                 dispatch({ type: "LOGIN_SUCCESS", payload: {message:"You are not Allowed."} }) 
