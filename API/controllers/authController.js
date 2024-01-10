@@ -1,6 +1,6 @@
 import user from "../models/userModule.js";
 import bcrypt from "bcryptjs"
-import  Jwt  from "jsonwebtoken";
+import Jwt from "jsonwebtoken";
 import { createError } from "../utils/error.js";
 export const register = async (req, res, next) => {
 
@@ -8,8 +8,7 @@ export const register = async (req, res, next) => {
     var hash = bcrypt.hashSync(req.body.password, salt);
     try {
         const newUser = new user({
-            userName: req.body.userName,
-            email: req.body.email,
+            ...req.body,
             password: hash
         })
 
@@ -23,20 +22,20 @@ export const register = async (req, res, next) => {
 
 export const login = async (req, res, next) => {
 
-   
+
     try {
-       const User = await user.findOne({userName:req.body.userName})
-       if (!User) return next(createError(404,"User not found"))
+        const User = await user.findOne({ userName: req.body.userName })
+        if (!User) return next(createError(404, "User not found"))
 
-       const isPasswordCorrect = await bcrypt.compare(req.body.password,User.password)  
-       if (!isPasswordCorrect) return next(createError(400,"wrong password"))
+        const isPasswordCorrect = await bcrypt.compare(req.body.password, User.password)
+        if (!isPasswordCorrect) return next(createError(400, "wrong password"))
 
-       const token = Jwt.sign({id:User._id,isAdmin:User.isAdmin},process.env.JWT)
+        const token = Jwt.sign({ id: User._id, isAdmin: User.isAdmin }, process.env.JWT)
 
-        const {password,isAdmin,...otherDetails} = User._doc
-        res.cookie("access Token",token,{
-            httpOnly:true,
-        }).status(200).json({details:{...otherDetails},isAdmin});
+        const { password, isAdmin, ...otherDetails } = User._doc
+        res.cookie("access Token", token, {
+            httpOnly: true,
+        }).status(200).json({ details: { ...otherDetails }, isAdmin });
     } catch (error) {
         next(error)
     }
