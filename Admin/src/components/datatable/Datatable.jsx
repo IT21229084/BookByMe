@@ -12,7 +12,7 @@ const Datatable = ({columns}) => {
   const [list, setList] = useState()
   const [data, setData] = useState(userRows);
   // const[data,loading,error] = useFetch(`/${path}`)
-
+        
   useEffect(() => {
     setList(data)
   }, [data])
@@ -59,7 +59,7 @@ const Datatable = ({columns}) => {
       <DataGrid
         className="datagrid"
         rows={list}
-        columns={userColumns.concat(actionColumn)}
+        columns={columns.concat(actionColumn)}
         pageSize={9}
         rowsPerPageOptions={[9]}
         checkboxSelection
