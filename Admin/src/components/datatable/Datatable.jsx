@@ -6,7 +6,7 @@ import { useState } from "react";
 import useFetch from "../../hooks/useFetch.js"
 import { useEffect } from "react";
 import axios  from "axios";
-const Datatable = () => {
+const Datatable = ({columns}) => {
   const location = useLocation();
   const path = location.pathname.split("/")[1]
   const [list, setList] = useState()
