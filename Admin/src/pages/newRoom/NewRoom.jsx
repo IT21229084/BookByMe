@@ -3,8 +3,8 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import Navbar from "../../components/navbar/Navbar";
 import DriveFolderUploadOutlinedIcon from "@mui/icons-material/DriveFolderUploadOutlined";
 import { useState } from "react";
-
-const NewRoom = ({ inputs, title }) => {
+import { roomInputs } from "../../formSource";
+const NewRoom = () => {
   const [file, setFile] = useState("");
 
   return (
@@ -13,10 +13,10 @@ const NewRoom = ({ inputs, title }) => {
       <div className="newContainer">
         <Navbar />
         <div className="top">
-          <h1>{title}</h1>
+          <h1>Add New Room</h1>
         </div>
         <div className="bottom">
-          <div className="left">
+          {/* <div className="left">
             <img
               src={
                 file
@@ -25,7 +25,7 @@ const NewRoom = ({ inputs, title }) => {
               }
               alt=""
             />
-          </div>
+          </div> */}
           <div className="right">
             <form>
               <div className="formInput">
@@ -40,10 +40,10 @@ const NewRoom = ({ inputs, title }) => {
                 />
               </div>
 
-              {inputs.map((input) => (
+              {roomInputs.map((input) => (
                 <div className="formInput" key={input.id}>
                   <label>{input.label}</label>
-                  <input type={input.type} placeholder={input.placeholder} />
+                  <input id={input.type} type={input.type} placeholder={input.placeholder} />
                 </div>
               ))}
               <button>Send</button>
