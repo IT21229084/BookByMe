@@ -27,6 +27,7 @@ app.use(cors())
 app.use(cookieParser())
 app.use(express.json())
 
+//call Routers
 app.use("/api/auth", authRoute)
 app.use("/api/hotels", hotelsRoute)
 app.use("/api/rooms", roomsRoute)
